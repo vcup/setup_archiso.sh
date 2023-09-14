@@ -1,0 +1,92 @@
+if [[ -z "$TMUX" ]] &&\
+   [[ "$TERM_PROGRAM" != "vscode" ]] &&\
+   [[ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]]; then
+  ID=$(tmux ls | cut -d: -f1)
+  if [[ -z "$ID" ]]; then
+    exec tmux -u new-session
+  else
+    exec tmux -u attach-session -t "$ID"
+  fi
+fi
+
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh_history
+HISTSIZE=1234567
+SAVEHIST=1234567
+#setopt share_history
+setopt inc_append_history
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/vcup/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+setopt HIST_IGNORE_DUPS
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+zinit ice depth=1; zinit light jeffreytse/zsh-vi-mode
+
+zinit light zdharma/fast-syntax-highlighting
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+
+zinit ice svn; zinit snippet OMZP::sudo
+zinit load agkozak/zsh-z
+zinit light ohmyzsh/ohmyzsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+### End of Zinit's installer chunk
+export EDITOR=vim
+export PATH="$HOME/.local/bin:$PATH"
+export ORACLE_HOME=/usr/lib/oracle/product/11.2.0/xe
+export PATH=$ORACLE_HOME/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+#export NLS_LANG="SIMPLIFIED CHINESE_CHINA.ZHS16GBK"
+
+# vim mode configurations
+bindkey -v
+bindkey -M viins 'jk' vi-cmd-mode # insert mode type 'jk' back to normal mode 
+
+# config SSH_AUTH_SOCK use for gpg-agent
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+
+if [[ ! -v 'ASCIINEMA' ]]; then
+  export ASCIINEMA=
+  #exec ~/.local/pipx/venvs/asciinema/bin/asciinema rec --append --stdin -i 1  ~/global.cast
+fi
+[ -f '/usr/share/nvm/init-nvm.sh' ] && source /usr/share/nvm/init-nvm.sh
+
+
+sortedmirrors() {
+  echo -n 'getting country...' &&\
+  country=$(curl -s https://ipinfo.io/json | jq -r .country) &&\
+  echo "$country" &&\
+  echo 'downloading latest mirrors' &&\
+  curl -s 'https://archlinux.org/mirrorlist/?country='$country'&use_mirror_status=on' |\
+  sed -e 's/^#//' -e '/^#/d' -e '/^$/d' | tee "$1" &&\
+  echo 'ranking mirrors...' &&\
+  rankmirrors -n 12 "$1" | sponge "$1" &&\
+  cat "$1"
+}

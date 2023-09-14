@@ -1,0 +1,163 @@
+{
+  "additional-repositories": [],
+  "archinstall-language": "English",
+  "bootloader": "Systemd-boot",
+  "config_version": "2.6.3",
+  "debug": false,
+  "disk_config": {
+    "config_type": "default_layout",
+    "device_modifications": [
+      {
+        "device": "/dev/vda",
+        "partitions": [
+          {
+            "btrfs": [],
+            "dev_path": null,
+            "flags": [
+              "Boot",
+              "ESP"
+            ],
+            "fs_type": "fat32",
+            "mount_options": [],
+            "mountpoint": "/boot",
+            "obj_id": "70023b71-09b0-4fd1-a3e2-32853d1c4ca4",
+            "size": {
+              "sector_size": {
+                "unit": "B",
+                "value": 512
+              },
+              "unit": "MiB",
+              "value": 512
+            },
+            "start": {
+              "sector_size": {
+                "unit": "B",
+                "value": 512
+              },
+              "unit": "MiB",
+              "value": 1
+            },
+            "status": "create",
+            "type": "primary"
+          },
+          {
+            "btrfs": [
+              {
+                "compress": false,
+                "mountpoint": "/",
+                "name": "@",
+                "nodatacow": false
+              },
+              {
+                "compress": false,
+                "mountpoint": "/home",
+                "name": "@home",
+                "nodatacow": false
+              },
+              {
+                "compress": false,
+                "mountpoint": "/var/log",
+                "name": "@log",
+                "nodatacow": false
+              },
+              {
+                "compress": false,
+                "mountpoint": "/var/cache/pacman/pkg",
+                "name": "@pkg",
+                "nodatacow": false
+              },
+              {
+                "compress": false,
+                "mountpoint": "/.snapshots",
+                "name": "@.snapshots",
+                "nodatacow": false
+              }
+            ],
+            "dev_path": null,
+            "flags": [],
+            "fs_type": "btrfs",
+            "mount_options": [
+              "compress=zstd"
+            ],
+            "mountpoint": null,
+            "obj_id": "127c745a-970e-49c1-b007-7dd8f077b1fe",
+            "size": {
+              "sector_size": {
+                "unit": "B",
+                "value": 512
+              },
+              "unit": "B",
+              "value": 119538712576
+            },
+            "start": {
+              "sector_size": {
+                "unit": "B",
+                "value": 512
+              },
+              "unit": "MiB",
+              "value": 513
+            },
+            "status": "create",
+            "type": "primary"
+          }
+        ],
+        "wipe": true
+      }
+    ]
+  },
+  "hostname": "archlinux",
+  "kernels": [
+    "linux"
+  ],
+  "locale_config": {
+    "kb_layout": "us",
+    "sys_enc": "UTF-8",
+    "sys_lang": "en_US"
+  },
+  "network_config": {
+    "type": "iso"
+  },
+  "no_pkg_lookups": false,
+  "ntp": true,
+  "offline": false,
+  "packages": [
+    "zsh",
+    "tmux",
+    "git",
+    "subversion",
+    "vim",
+    "neovim",
+    "rsync",
+    "openssh",
+    "avahi",
+    "bottom",
+    "htop",
+    "fzf",
+    "n2n",
+    "gawk",
+    "net-tools",
+    "coreutils",
+    "moreutils",
+    "pacman-contrib",
+    "less"
+  ],
+  "services": [
+    "sshd.service",
+    "avahi-daemon.service"
+  ],
+  "parallel downloads": 20,
+  "profile_config": {
+    "gfx_driver": null,
+    "greeter": null,
+    "profile": {
+      "custom_settings": {},
+      "details": [],
+      "main": "Minimal"
+    }
+  },
+  "script": "guided",
+  "silent": false,
+  "swap": true,
+  "timezone": "UTC",
+  "version": "2.6.3"
+}

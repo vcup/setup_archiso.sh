@@ -1,0 +1,5 @@
+pkgs/*
+pkgs.tbz2
+workdir/
+archiso/
+archlinux-*.iso
