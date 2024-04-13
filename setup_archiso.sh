@@ -92,7 +92,7 @@ _set_username
 _set_services
 
 # auto run install script
-sed '/automated_script$/a\    asciinema rec $HOME\/install.cast --append --stdin -i 1 -c "zsh \/root\/install.sh" && reboot' -i "${airoot}/root/.automated_script.sh"
+sed '/automated_script$/a\    asciinema rec $HOME\/install.cast --append --stdin -i 1 -c "zsh \/root\/install.sh"' -i "${airoot}/root/.automated_script.sh"
 
 authkeys='.ssh/authorized_keys'
 isoauthkeys="$airoot/root/$authkeys"
